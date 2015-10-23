@@ -82,12 +82,11 @@ int main(int argc, char* argv[]) {
 
 	result += ' ';				
   }
-   std::cout << result << std::endl;		//Print result to console after 'Ctrl-D' 
-   std::cout << "Recorded arguments were: ";
-		for(int i=1; i<=argc; ++i){
-			std::cout << argv[i] << " ";
-		}
+   std::cout << result << "\n";			//Print result to console after 'Ctrl-D' 
 
-   std::cout << std::endl;
+   std::cout << "Recorded arguments were: \n";	//Output user arguments 
+		for(int i{1}; i<argc; ++i){
+			std::cout << "Argument " << i << ": " << argv[i] << "\n";
+		}
   return 0;
 }
