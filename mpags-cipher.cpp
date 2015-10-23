@@ -83,10 +83,38 @@ int main(int argc, char* argv[]) {
 	result += ' ';				
   }
    std::cout << result << "\n";			//Print result to console after 'Ctrl-D' 
+	 
+   std::string argument{""};
 
-   std::cout << "Recorded arguments were: \n";	//Output user arguments 
 		for(int i{1}; i<argc; ++i){
-			std::cout << "Argument " << i << ": " << argv[i] << "\n";
+			
+			argument = argv[i];
+			
+
+
+			if(argument == "-h" || argument == "--help"){
+				
+					std::cout << "WOOOOO someone needs help! \n";
+					continue;
+			}
+				
+			if(argument=="--version"){
+					std::cout << "Version 0.1.3 \n";
+					continue;
+
+			}
+			if(argument=="-i"){
+					std::cout << "Input File is: " << argv[i+1] << std::endl;
+					++i;
+					continue;
+			}
+			
+			if(argument=="-o"){
+					std::cout << "Output File is: " << argv[i+1] << std::endl;
+					++i;
+					continue;
+			}
 		}
+
   return 0;
 }
