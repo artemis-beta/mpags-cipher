@@ -8,8 +8,9 @@
 #include <iostream>
 #include <string>
 #include <ctype.h>
+#include <array>
 // This is one of the two valid signatures for main()
-int main(int /*argc*/, char* /*argv*/[]) {
+int main(int argc, char* argv[]) {
 
   char in_char{'x'}; 				//Define character check variable
   std::string result{""};			//Define Result string for printing
@@ -82,5 +83,11 @@ int main(int /*argc*/, char* /*argv*/[]) {
 	result += ' ';				
   }
    std::cout << result << std::endl;		//Print result to console after 'Ctrl-D' 
+   std::cout << "Recorded arguments were: ";
+		for(int i=1; i<=argc; ++i){
+			std::cout << argv[i] << " ";
+		}
+
+   std::cout << std::endl;
   return 0;
 }
