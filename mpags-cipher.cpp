@@ -1,25 +1,80 @@
 //! Main implementation of the mpags-cipher program
 #include <iostream>
 #include <string>
+#include <ctype.h>
 // This is one of the two valid signatures for main()
 int main(int /*argc*/, char* /*argv*/[]) {
 
-	int a{10}, e{11};
-	const double b{334.567};
-	int c{b};
-	auto d{true};
-	std::string f{"BOOM"};	
+  char in_char{'x'};
+  std::string result{""};
+  
+  std::cout << "Enter a number: ";
+ 
+ while(std::cin >> in_char){
 
-	char g{f[2]};
+	if(isdigit(in_char)){
 
-	a = 20;
+  		switch (in_char)
+      		{
 
-	std::cout << "Hello World! \n";
-	std::cout << "The integer value you arbitrarily picked to state is: " << a << std::endl;
-	std::cout << "The non random number of the day is: " << b << std::endl;
-	std::cout << "Divide a double by an int and you get: " << b/a << std::endl;
-	std::cout << "DON'T divide an int by an int: " << a/e << " <- loss of precision!" << std::endl;
-	std::cout << "Life is pretty " << f << std::endl;
-	std::cout << "Not so random character is '" << g << "' \n";
-	return 0;
+			case '0':
+
+				result += "ZERO";
+				break;
+
+			case '1':
+				result += "ONE";
+				break;
+			case '2':
+
+				result += "TWO";
+				break;
+
+			case '3':
+				result += "THREE";
+				break;
+			
+			case '4': 
+				result += "FOUR";
+				break;
+			
+			case '5':
+				result += "FIVE";
+				break;
+
+			case '6':
+				result += "SIX";
+				break;
+
+			case '7':
+				result += "SEVEN";
+				break;
+
+			case '8':
+
+				result += "EIGHT";
+				break;
+			
+			case '9':
+
+				result += "NINE";
+				break;
+
+			
+  		}
+
+		
+
+	}
+	
+	else if(isalpha(in_char)){
+		
+		result += toupper(in_char);
+
+	}
+
+	result += ' ';
+  }
+   std::cout << result << std::endl;
+  return 0;
 }
