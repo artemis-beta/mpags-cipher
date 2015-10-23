@@ -16,4 +16,3 @@ A simple command line tool for encrypting/decrypting text using classical cipher
 ## Documentation
 
 [Markdown Guide](http://daringfireball.net/projects/markdown/basics)
-sgry8888ikfyus
