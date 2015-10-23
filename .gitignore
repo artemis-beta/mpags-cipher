@@ -1,3 +1,11 @@
+# Lines beginning with '#' are comments
+# text Editor Temp Files
+*~
+*.swp
+
+# Mac FileSystem
+.DS_Store
+ 
 # Compiled Object files
 *.slo
 *.lo
