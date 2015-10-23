@@ -1,20 +1,26 @@
-//! Main implementation of the mpags-cipher program
+//********************************************************
+//		MPAGS Cipher Code Version 1
+//
+//	Takes code and converts to capitalised letters
+//
+//********************************************************
+
 #include <iostream>
 #include <string>
 #include <ctype.h>
 // This is one of the two valid signatures for main()
 int main(int /*argc*/, char* /*argv*/[]) {
 
-  char in_char{'x'};
-  std::string result{""};
+  char in_char{'x'}; 				//Define character check variable
+  std::string result{""};			//Define Result string for printing
   
-  std::cout << "Enter a number: ";
+  std::cout << "Enter code: ";			//Prompt user for input
  
- while(std::cin >> in_char){
+ while(std::cin >> in_char){			//Repeat conversion until end of input
 
-	if(isdigit(in_char)){
+	if(isdigit(in_char)){			//Check if input is numeric
 
-  		switch (in_char)
+  		switch (in_char)		//Convert number to word
       		{
 
 			case '0':
@@ -67,14 +73,14 @@ int main(int /*argc*/, char* /*argv*/[]) {
 
 	}
 	
-	else if(isalpha(in_char)){
+	else if(isalpha(in_char)){		//Check if input is letter and convert to capital
 		
 		result += toupper(in_char);
 
 	}
 
-	result += ' ';
+	result += ' ';				
   }
-   std::cout << result << std::endl;
+   std::cout << result << std::endl;		//Print result to console after 'Ctrl-D' 
   return 0;
 }
