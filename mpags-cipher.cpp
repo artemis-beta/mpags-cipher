@@ -1,120 +1,105 @@
-//********************************************************
-//		MPAGS Cipher Code Version 1
+//**********************************************************************
+//			MPAGS Cipher Program v0.1.4
 //
-//	Takes code and converts to capitalised letters
+//		   Kristian Zarebski, October 30th 2015
 //
-//********************************************************
+//		Uses a function definition for code creation
+//
+//**********************************************************************
 
 #include <iostream>
 #include <string>
-#include <ctype.h>
-#include <array>
-// This is one of the two valid signatures for main()
-int main(int argc, char* argv[]) {
 
-  char in_char{'x'}; 				//Define character check variable
-  std::string result{""};			//Define Result string for printing
-  
-  std::cout << "Enter code: ";			//Prompt user for input
- 
- while(std::cin >> in_char){			//Repeat conversion until end of input
+std::string transformChar(char in_char); 		//Declare Code Creation Function
 
-	if(isdigit(in_char)){			//Check if input is numeric
+int main(){						// Main function					
 
-  		switch (in_char)		//Convert number to word
-      		{
-
-			case '0':
-
-				result += "ZERO";
-				break;
-
-			case '1':
-				result += "ONE";
-				break;
-			case '2':
-
-				result += "TWO";
-				break;
-
-			case '3':
-				result += "THREE";
-				break;
-			
-			case '4': 
-				result += "FOUR";
-				break;
-			
-			case '5':
-				result += "FIVE";
-				break;
-
-			case '6':
-				result += "SIX";
-				break;
-
-			case '7':
-				result += "SEVEN";
-				break;
-
-			case '8':
-
-				result += "EIGHT";
-				break;
-			
-			case '9':
-
-				result += "NINE";
-				break;
-
-			
-  		}
-
-		
-
+	char in_char{'x'};				//Declare Character variable for user input
+	std::string result{""};
+	std::cout << "Enter code: \n";
+	while(std::cin >> in_char){			//Repeat conversion until end of input
+		result+=" "+ transformChar(in_char);
 	}
+	std::cout << result << std::endl;
+	return 0;
+
+}
+
+//*************************************************************************
+//
+//	Transform Function: takes user input and checks if it is a
+//	letter or number, if it is a letter the character is converted to
+//	capital, whereas numbers are converted into a name string
+//	the result is then returned
+//
+//*************************************************************************
+
+std::string transformChar(char in_char){
+
 	
-	else if(isalpha(in_char)){		//Check if input is letter and convert to capital
+	std::string result{""};
+					
+
+		if(isdigit(in_char)){			//Check if input is numeric
+
+	  		switch (in_char)		//Convert number to word
+	      		{
+
+				case '0':
+
+					result += "ZERO";
+					break;
+
+				case '1':
+					result += "ONE";
+					break;
+				case '2':
+
+					result += "TWO";
+					break;
+
+				case '3':
+					result += "THREE";
+					break;
+			
+				case '4': 
+					result += "FOUR";
+					break;
+			
+				case '5':
+					result += "FIVE";
+					break;
+
+				case '6':
+					result += "SIX";
+					break;
+
+				case '7':
+					result += "SEVEN";
+					break;
+
+				case '8':
+
+					result += "EIGHT";
+					break;
+			
+				case '9':
+
+					result += "NINE";
+					break;
+
+			
+	  		}
+
 		
-		result += toupper(in_char);
 
-	}
-
-	result += ' ';				
-  }
-   std::cout << result << "\n";			//Print result to console after 'Ctrl-D' 
-	 
-   std::string argument{""};
-
-		for(int i{1}; i<argc; ++i){
-			
-			argument = argv[i];
-			
-
-
-			if(argument == "-h" || argument == "--help"){
-				
-					std::cout << "WOOOOO someone needs help! \n";
-					continue;
-			}
-				
-			if(argument=="--version"){
-					std::cout << "Version 0.1.3 \n";
-					continue;
-
-			}
-			if(argument=="-i"){
-					std::cout << "Input File is: " << argv[i+1] << std::endl;
-					++i;
-					continue;
-			}
-			
-			if(argument=="-o"){
-					std::cout << "Output File is: " << argv[i+1] << std::endl;
-					++i;
-					continue;
-			}
 		}
+	
+		else if(isalpha(in_char)){		//Check if input is letter and convert to capital
+		
+			result += toupper(in_char);
 
-  return 0;
+		}
+		
+	return result;		
 }
