@@ -19,43 +19,46 @@
 #include <fstream>
 
 int main(int argc, char* argv[]){		// Main function with user arguments 		
-	std::string infile{""};			// Set string for input file name
-	std::string outfile{""};		// Set string for output file name
+	//std::string info_input.infile{""};			// Set string for input file name
+	//std::string outfile{""};		// Set string for output file name
 	std::string option{""};			// Set string for code/decode options	
 	std::ofstream output_file;		// outfile stream for Output File
 	std::ifstream input_file;		// infile stream for Input File
-	char in_char{'x'};			// Character variable for user input
-	char out_char{'y'};			// Character variable for conversion output
+	//char in_char{'x'};			// Character variable for user input
+	//char out_char{'y'};			// Character variable for conversion output
 	int input_key{0};			// Integer for translation - cipher key
 	std::string result{""}; 		// String for final result
 
 
+	CipherMode select{CipherMode::Encrypt};
+	CommandLineInfo info_input{"","",argc,'x','y',select};
+
 	// Following function checks the arguments provided when initiating the program
 					
-	bool checkCommandLine = processCommandLine(argc, argv, infile, outfile);
+	bool checkCommandLine = processCommandLine(argv,info_input);
 
 	if(checkCommandLine == false){ return 1; }
 
 
 	option = argv[1];	// Take the first argument to be the specifier for Code/Decode
 
-	output_file.open(outfile);	//open output file
-	input_file.open(infile);	//open input file
+	output_file.open(info_input.outfile);	//open output file
+	input_file.open(info_input.infile);	//open input file
 	
 
 	// Checks performed to ensure that if an output/input file name has been specified, the file
 	// has opened successfully
 
-	if(outfile != ""){bool output_check = output_file.good();
+	if(info_input.outfile != ""){bool output_check = output_file.good();
 
-		std::cout << "Setting output file to: " << outfile << std::endl;
+		std::cout << "Setting output file to: " << info_input.outfile << std::endl;
 
 		if(output_check == false){ std::cout << "Error reading output file \n"; return 1;}
 
 	}
-	if(infile != ""){bool input_check = input_file.good();
+	if(info_input.infile != ""){bool input_check = input_file.good();
 
-		std::cout << "Setting input file to: " << infile << std::endl;
+		std::cout << "Setting input file to: " << info_input.infile << std::endl;
 
 		if(input_check == false){ std::cout << "Error reading input file \n"; return 1;}
 
@@ -63,7 +66,7 @@ int main(int argc, char* argv[]){		// Main function with user arguments
 
 	// State if user has selected Code/Decode function depending on the 'option' arg. provided
 
-	if(option == "-c"){std::cout << "MESSAGE CODER \n \n";}
+	if(info_input.ciphermode == CipherMode::Encrypt){std::cout << "MESSAGE CODER \n \n";}
 	else{std::cout << "MESSAGE DECODER \n \n";}
 
 	// Request cipher key before proceeding checking it is a valid integer
@@ -76,28 +79,39 @@ int main(int argc, char* argv[]){		// Main function with user arguments
 	// or user input depending on the presence of the input file argument. 
 	// Then performs the CaesarCipher operation on individual characters of the input.
 
-	if(infile != ""){
-		std::cout << "Input type set to 'file'\n";		
-		while(input_file.get(in_char)){	
+	CaesarCipher cipher_1(input_key);
 
-			out_char = CaesarCipher(input_key, in_char,option);
-			result+=out_char;		
-			result+=" ";
+	if(info_input.infile != ""){
 
+		if(info_input.ciphermode == CipherMode::Encrypt){
+			std::cout << "Input type set to 'file'\n";		
+			while(std::getline(input_file, cipher_1.inputstring_)){
+
+						cipher_1.Encrypt();
+			}
+		}
+		else{
+			std::cout << "Input type set to 'file'\n";		
+			while(std::getline(input_file, cipher_1.inputstring_)){
+
+						cipher_1.Decrypt();
+			}
 		}
 	}
 	else{
 		std::cout << "\n Input type set to 'user'\n";
 		std::cout << "\n Enter Message for Caesar Cipher: ";
-		while(std::cin >> in_char){
+		std::cin >> cipher_1.inputstring_;
 
-			out_char = CaesarCipher(input_key, in_char,option);
-			result+=out_char;		
-			result+=" ";
+		if(info_input.ciphermode == CipherMode::Encrypt){
+				cipher_1.Encrypt();
+		}
+		else{
+				cipher_1.Decrypt();
 		}
 	}
-	std::cout << std::endl << result << std::endl;	// Print the converted string to the terminal
-	output_file << result << std::endl;		// If an output file is declared
+	std::cout << std::endl << cipher_1.outputstring_ << std::endl;	// Print the converted string to the terminal
+	output_file << cipher_1.outputstring_ << std::endl;		// If an output file is declared
 							// also print this result to the file
 
 	output_file.close();				// Close output file to ensure no data loss

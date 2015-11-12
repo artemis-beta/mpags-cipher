@@ -14,14 +14,15 @@
 #include <string>
 #include <iostream>
 #include <stdlib.h>
+#include "processCommandLine.hpp"
 
-bool processCommandLine(int argc, char* argv[], std::string &infile, std::string &outfile){
+bool processCommandLine(char* argv[],CommandLineInfo &info_args){
 
 
 	std::string input{""}, input2{""};	//Strings for arguments
 
 	//Check that an option has been stated when program is initiated
-	if(argc == 1){std::cout << "ERROR: Program option required, type 'mpags-cipher -h'"\
+	if(info_args.num_args == 1){std::cout << "ERROR: Program option required, type 'mpags-cipher -h'"\
 	" for details \n"; return false;}
 	
 	input = argv[1]; // Set input to be the value of argument 1
@@ -43,36 +44,39 @@ bool processCommandLine(int argc, char* argv[], std::string &infile, std::string
 		" '-d' or '-h' flags to work. \n \n"\
 		"E.g. 'mpags-cipher -d -i inputfile.txt -o outputfile.txt' \n \n"; exit(0);}
 
+	if(input == "-c"){info_args.ciphermode = CipherMode::Encrypt;}
+	else{info_args.ciphermode = CipherMode::Decrypt;}
+
 	// Check if file options selected by user and ensure that where an input/output file
 	// has been requested, the user specifies a valid file name (cycles through arguments)
 
-	for(int i{2}; i<argc; ++i){
+	for(int i{2}; i<info_args.num_args; ++i){
 	
 		input = argv[i];
 
-		if(i != argc-1){input2 = argv[i+1];}
+		if(i != info_args.num_args-1){input2 = argv[i+1];}
 
 		if(input.front() == '-'){if(input != "-o" && input != "-i"){
 			std::cout << "ERROR: Invalid argument '" << input << "' \n"; 
 			return false;}}
 		
-		if(input == "-o"){if(i == argc-1){ 
+		if(input == "-o"){if(i ==info_args.num_args-1){ 
 			std::cout << "ERROR: No Output File Defined! \n";
 			return false;}
 
 			else if(input2.front() == '-'){ 
 			std::cout << "ERROR: Invalid File Name \n"; return false;}
-			outfile = argv[i+1];
+			info_args.outfile = argv[i+1];
 		}
 		
 		if(input == "-i"){
-			if(i == argc-1){ 
+			if(i == info_args.num_args-1){ 
 				std::cout << "ERROR: No Input File Defined! \n"; 
-				infile = input; return false;}
+				info_args.infile = input; return false;}
 
 			else if(input2.front() == '-'){ 
 				std::cout << "ERROR: Invalid File Name \n"; return false;}
-			infile = argv[i+1];
+			info_args.infile = argv[i+1];
 		
 		} 
 	}
