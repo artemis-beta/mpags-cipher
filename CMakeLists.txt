@@ -21,11 +21,24 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang|AppleClang")
 	set(CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -Wfatal-errors -Wshadow -pedantic")
 endif()
 
-# - Declare the build of mpags-cipher main program
+# - Add the MPAGSCipher subdirectory to the build
 
-add_executable(mpags-cipher mpags-cipher.cpp MPAGSCipher/TransformChar.hpp MPAGSCipher/TransformChar.cpp MPAGSCipher/processCommandLine.cpp 
-MPAGSCipher/processCommandLine.hpp MPAGSCipher/CaesarCipher.cpp MPAGSCipher/CaesarCipher.hpp)
+add_subdirectory(MPAGSCipher)
 
-target_include_directories(mpags-cipher PRIVATE MPAGSCipher)
+# - Enable testing and add the Testing subdirectory to the build
+enable_testing()
+add_subdirectory(Testing)
 
-target_compile_features(mpags-cipher PRIVATE cxx_auto_type cxx_range_for cxx_uniform_initialization) 
+# - Declare the build of mpags-cipher main program and link it to
+# the MPAGSCipher library
+
+add_executable(mpags-cipher mpags-cipher.cpp)
+target_link_libraries(mpags-cipher PRIVATE MPAGSCipher)
+
+# - Install mpags-cipher using UNIX/GNU directory structure
+include(GNUInstallDirs)
+install(TARGETS mpags-cipher DESTINATION ${CMAKE_INSTALL_BINDIR})
+
+# - Package mpags-cipher binaries and source
+set(CPACK_PACKAGE_VERSION ${PROJECT_VERSION})
+include(CPack)

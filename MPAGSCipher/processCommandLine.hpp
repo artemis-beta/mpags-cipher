@@ -10,6 +10,12 @@ enum class CipherMode {
 	
 };
 
+enum class CipherType {
+
+	Caesar,
+	PlayFair
+};
+
 struct CommandLineInfo {
 
 	std::string infile;
@@ -18,7 +24,7 @@ struct CommandLineInfo {
 	char in_char;
 	char out_char;
 	CipherMode ciphermode;
-
+	CipherType ciphertype;
 };
 
 bool processCommandLine(char* argv[],CommandLineInfo &info_args);

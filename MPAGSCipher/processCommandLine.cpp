@@ -56,10 +56,19 @@ bool processCommandLine(char* argv[],CommandLineInfo &info_args){
 
 		if(i != info_args.num_args-1){input2 = argv[i+1];}
 
+		
 		if(input.front() == '-'){if(input != "-o" && input != "-i"){
 			std::cout << "ERROR: Invalid argument '" << input << "' \n"; 
 			return false;}}
 		
+		if(input == "--Cipher"){if(i==info_args.num_args-1){
+			std::cout << "ERROR: Cipher Type Not Specified! \n";
+			return false;}
+			else if(input2 == "caesar"){info_args.ciphertype = CipherType::Caesar;}
+			else if(input2 == "playfair"){info_args.ciphertype = CipherType::PlayFair;}
+			else{std::cout << "ERROR: Invalid Cipher Type! \n"; return false;}
+		}
+
 		if(input == "-o"){if(i ==info_args.num_args-1){ 
 			std::cout << "ERROR: No Output File Defined! \n";
 			return false;}
