@@ -14,8 +14,10 @@
 #include "CaesarCipher.hpp"
 
 
-CaesarCipher::CaesarCipher(int &cipher_key) : key_{0}{ key_ = cipher_key;}
-void CaesarCipher::Encrypt(){
+CaesarCipher::CaesarCipher(const std::string &cipher_key) : key_{0}{ key_ = std::stoi(cipher_key);}
+std::string CaesarCipher::Encrypt(std::string &inputstring){
+
+	inputstring_=inputstring;
 
 	for(int j{0}; j < int(inputstring_.size()); ++j){
 
@@ -35,8 +37,11 @@ void CaesarCipher::Encrypt(){
 		}	
 	}
 	outputstring_ = inputstring_;
+	return outputstring_;
 }
-void CaesarCipher::Decrypt(){
+std::string CaesarCipher::Decrypt(std::string &inputstring){
+
+	inputstring_ = inputstring;
 
 	for(int j{0}; j < int(inputstring_.size()); ++j){
 
@@ -58,4 +63,5 @@ void CaesarCipher::Decrypt(){
 			}
 		}
 	}
+	return outputstring_;
 }

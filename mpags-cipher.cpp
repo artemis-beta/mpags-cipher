@@ -16,6 +16,8 @@
 #include "TransformChar.hpp"
 #include "processCommandLine.hpp"
 #include "CaesarCipher.hpp"
+#include "PlayFairCipher.hpp"
+#include "CipherFactory.hpp"
 #include <fstream>
 
 int main(int argc, char* argv[]){		// Main function with user arguments 		
@@ -26,12 +28,14 @@ int main(int argc, char* argv[]){		// Main function with user arguments
 	std::ifstream input_file;		// infile stream for Input File
 	//char in_char{'x'};			// Character variable for user input
 	//char out_char{'y'};			// Character variable for conversion output
-	int input_key{0};			// Integer for translation - cipher key
+	std::string input_key{""};			// Integer for translation - cipher key
 	std::string result{""}; 		// String for final result
-
+	std::string input_string{""};
 
 	CipherMode select{CipherMode::Encrypt};
-	CommandLineInfo info_input{"","",argc,'x','y',select};
+	CipherType type{CipherType::Caesar};
+	CommandLineInfo info_input{"","",argc,'x','y',select,type};
+
 
 	// Following function checks the arguments provided when initiating the program
 					
@@ -79,39 +83,40 @@ int main(int argc, char* argv[]){		// Main function with user arguments
 	// or user input depending on the presence of the input file argument. 
 	// Then performs the CaesarCipher operation on individual characters of the input.
 
-	CaesarCipher cipher_1(input_key);
+
+	auto aCipher = cipherFactory( info_input.ciphertype, input_key );
 
 	if(info_input.infile != ""){
 
 		if(info_input.ciphermode == CipherMode::Encrypt){
 			std::cout << "Input type set to 'file'\n";		
-			while(std::getline(input_file, cipher_1.inputstring_)){
+			while(std::getline(input_file, input_string)){
 
-						cipher_1.Encrypt();
+						result = aCipher->Encrypt(input_string);
 			}
 		}
 		else{
 			std::cout << "Input type set to 'file'\n";		
-			while(std::getline(input_file, cipher_1.inputstring_)){
+			while(std::getline(input_file, input_string)){
 
-						cipher_1.Decrypt();
+						result = aCipher->Decrypt(input_string);
 			}
 		}
 	}
 	else{
 		std::cout << "\n Input type set to 'user'\n";
 		std::cout << "\n Enter Message for Caesar Cipher: ";
-		std::cin >> cipher_1.inputstring_;
+		std::cin >> input_string;
 
 		if(info_input.ciphermode == CipherMode::Encrypt){
-				cipher_1.Encrypt();
+				result = aCipher->Encrypt(input_string);
 		}
 		else{
-				cipher_1.Decrypt();
+				result = aCipher->Decrypt(input_string);
 		}
 	}
-	std::cout << std::endl << cipher_1.outputstring_ << std::endl;	// Print the converted string to the terminal
-	output_file << cipher_1.outputstring_ << std::endl;		// If an output file is declared
+	std::cout << std::endl << result << std::endl;	// Print the converted string to the terminal
+	output_file <<result << std::endl;		// If an output file is declared
 							// also print this result to the file
 
 	output_file.close();				// Close output file to ensure no data loss

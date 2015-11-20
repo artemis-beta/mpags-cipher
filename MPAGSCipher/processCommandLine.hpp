@@ -2,18 +2,13 @@
 #define MPAGSCIPHER_PROCESSCOMMANDLINE_HPP
 
 #include <iostream>
+#include "CipherFactory.hpp"
 
 enum class CipherMode {
 
 	Encrypt,
 	Decrypt
 	
-};
-
-enum class CipherType {
-
-	Caesar,
-	PlayFair
 };
 
 struct CommandLineInfo {
