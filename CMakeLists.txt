@@ -25,6 +25,10 @@ endif()
 
 add_subdirectory(MPAGSCipher)
 
+# - Add the Documentation Subdirectory
+
+add_subdirectory(Documentation)
+
 # - Enable testing and add the Testing subdirectory to the build
 enable_testing()
 add_subdirectory(Testing)

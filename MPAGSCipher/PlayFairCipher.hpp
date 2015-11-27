@@ -9,6 +9,7 @@ class PlayFairCipher : public Cipher {
 
 public:
 	PlayFairCipher(const std::string &cipher_key);
+	void setKey(std::string key);
 	virtual std::string Encrypt(std::string &input_string) override;
 	virtual std::string Decrypt(std::string &input_string) override;
 	std::string outputstring_{""};

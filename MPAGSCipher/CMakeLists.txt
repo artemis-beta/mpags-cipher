@@ -9,6 +9,8 @@ add_library(MPAGSCipher STATIC
  processCommandLine.hpp
  processCommandLine.cpp
  CipherFactory.hpp
+ PlayFairCipher.cpp
+ PlayFairCipher.hpp
  CipherFactory.cpp
  TransformChar.cpp
  TransformChar.hpp
